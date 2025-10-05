@@ -5,7 +5,7 @@ import CollectionTracker from '@/components/ui/CollectionTracker';
 import AchievementToast from '@/components/ui/AchievementToast';
 import PokemonOfTheDay from '@/components/ui/PokemonOfTheDay';
 import Link from 'next/link';
-import { Sparkles, Users } from 'lucide-react';
+import { Sparkles, Users, Trophy } from 'lucide-react';
 import CompareBar from '@/components/ui/CompareBar';
 import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 
@@ -33,6 +33,13 @@ export default function Home() {
               >
                 <Users className="w-4 h-4" />
                 My Teams
+              </Link>
+              <Link
+                href="/leaderboards"
+                className="flex items-center gap-2 bg-bg-secondary border border-border hover:border-accent text-text-primary px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
+              >
+                <Trophy className="w-4 h-4" />
+                Leaderboards
               </Link>
             </div>
             <div className="flex items-center gap-2">

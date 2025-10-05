@@ -76,16 +76,38 @@ export async function getPokemonSpecies(
  * @param id - Evolution chain ID
  */
 export async function getEvolutionChain(id: number): Promise<EvolutionChain> {
-  const response = await fetch(
-    `${BASE_URL}/evolution-chain/${id}`,
-    CACHE_CONFIG
-  );
+  const res = await fetch(`${BASE_URL}/evolution-chain/${id}`, {
+    next: { revalidate: 86400 },
+  });
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch evolution chain: ${response.statusText}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch evolution chain');
   }
 
-  return response.json();
+  return res.json();
+}
+
+/**
+ * Get all Pokemon (limited to first 1025)
+ */
+export async function getAllPokemon(): Promise<Pokemon[]> {
+  const res = await fetch(`${BASE_URL}/pokemon?limit=1025`, {
+    next: { revalidate: 86400 },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch all Pokemon');
+  }
+
+  const data: PokemonListResponse = await res.json();
+  
+  // Fetch detailed data for all Pokemon in parallel
+  const pokemonPromises = data.results.map(p => {
+    const id = parseInt(p.url.split('/').slice(-2, -1)[0]);
+    return getPokemon(id.toString());
+  });
+
+  return Promise.all(pokemonPromises);
 }
 
 /**
