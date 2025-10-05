@@ -42,6 +42,9 @@ export async function generateMetadata({ params }: PokemonPageProps) {
   }
 }
 
+// Import the client component
+import ShinyPokemonWrapper from '@/components/pokemon/ShinyPokemonWrapper';
+
 export default async function PokemonPage({ params }: PokemonPageProps) {
   const { id } = await params;
 
@@ -49,11 +52,16 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
     const pokemon = await getPokemon(id);
     const species = await getPokemonSpecies(id);
 
-    // Extract evolution chain ID from URL
-    const evolutionChainId = parseInt(
-      species.evolution_chain.url.split('/').slice(-2, -1)[0]
-    );
-    const evolutionData = await getEvolutionChain(evolutionChainId);
+    // Extract evolution chain ID from URL (may not exist for some Pokemon)
+    let evolutionData = null;
+    try {
+      if (species.evolution_chain?.url) {
+        evolutionData = await getEvolutionChain(species.evolution_chain.url);
+      }
+    } catch (error) {
+      console.log('Evolution chain not available for this Pokemon');
+      // evolutionData remains null, page will skip evolution section
+    }
 
     // Get English flavor text
     const flavorText = species.flavor_text_entries
@@ -61,7 +69,8 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
       ?.flavor_text.replace(/\f/g, ' ');
 
     return (
-      <div className="min-h-screen pb-16">
+      <ShinyPokemonWrapper pokemonId={pokemon.id}>
+        <div className="min-h-screen pb-16">
         {/* Header */}
         <header className="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-sm border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -209,7 +218,7 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
           </div>
 
           {/* Evolution Chain */}
-          {evolutionData.chain.evolves_to.length > 0 && (
+          {evolutionData && evolutionData.chain.evolves_to.length > 0 && (
             <div className="bg-bg-secondary border border-border rounded-3xl p-8 mb-8">
               <h2 className="text-2xl font-bold text-text-primary mb-6">
                 Evolution Chain
@@ -236,7 +245,8 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
             <MoveList moves={pokemon.moves} />
           </div>
         </main>
-      </div>
+        </div>
+      </ShinyPokemonWrapper>
     );
   } catch (error) {
     console.error('Error loading Pokemon:', error);

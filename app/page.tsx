@@ -1,5 +1,8 @@
 import PokemonList from '@/components/pokemon/PokemonList';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import PokemonOfTheDay from '@/components/ui/PokemonOfTheDay';
+import Link from 'next/link';
+import { Sparkles } from 'lucide-react';
 import CompareBar from '@/components/ui/CompareBar';
 
 export default function Home() {
@@ -8,14 +11,18 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
               <h1 className="text-4xl font-bold text-text-primary">
                 Poké<span className="text-accent">Dex</span>
               </h1>
-              <p className="text-text-secondary mt-1">
-                Explore the world of Pokémon
-              </p>
+              <Link
+                href="/random"
+                className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 shadow-lg"
+              >
+                <Sparkles className="w-4 h-4" />
+                I'm Feeling Lucky
+              </Link>
             </div>
             <ThemeToggle />
           </div>
@@ -24,6 +31,12 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Pokémon of the Day */}
+        <div className="mb-8">
+          <PokemonOfTheDay />
+        </div>
+
+        {/* Main List */}
         <PokemonList />
       </main>
 

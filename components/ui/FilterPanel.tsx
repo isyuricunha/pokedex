@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Filter, X } from 'lucide-react';
+import { Filter, X, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 import { TypeName } from '@/lib/types/pokemon';
 
 interface FilterPanelProps {
@@ -154,22 +155,42 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
             {/* Generation Filter */}
             <div className="mb-6">
-              <h4 className="text-sm font-medium text-text-primary mb-3">Generation</h4>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-text-primary">Generation</h3>
+                <p className="text-xs text-text-secondary">Click gen # for details</p>
+              </div>
               <div className="grid grid-cols-3 gap-2">
+                <button
+                  onClick={() => handleGenerationChange(null)}
+                  className={`py-2 rounded-lg text-sm font-medium transition-all ${
+                    selectedGeneration === null
+                      ? 'bg-accent text-white'
+                      : 'bg-bg-primary border border-border text-text-primary hover:border-accent'
+                  }`}
+                >
+                  All
+                </button>
                 {GENERATIONS.map((gen) => (
-                  <button
-                    key={gen.id}
-                    onClick={() => handleGenerationChange(
-                      selectedGeneration === gen.id ? null : gen.id
-                    )}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedGeneration === gen.id
-                        ? 'bg-accent text-white'
-                        : 'bg-bg-primary border border-border text-text-primary hover:border-accent'
-                    }`}
-                  >
-                    {gen.name}
-                  </button>
+                  <div key={gen.id} className="relative group">
+                    <button
+                      onClick={() => handleGenerationChange(gen.id)}
+                      className={`w-full py-2 rounded-lg text-sm font-medium transition-all ${
+                        selectedGeneration === gen.id
+                          ? 'bg-accent text-white'
+                          : 'bg-bg-primary border border-border text-text-primary hover:border-accent'
+                      }`}
+                    >
+                      {gen.name}
+                    </button>
+                    <Link
+                      href={`/generation/${gen.id}`}
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-accent rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={(e) => e.stopPropagation()}
+                      title={`View ${gen.name} details`}
+                    >
+                      <ExternalLink className="w-3 h-3 text-white" />
+                    </Link>
+                  </div>
                 ))}
               </div>
             </div>
