@@ -10,7 +10,7 @@ interface ComparePageProps {
   searchParams: Promise<{ pokemon?: string }>;
 }
 
-export async function generateMetadata({ searchParams }: ComparePageProps) {
+export async function generateMetadata() {
   return {
     title: 'Compare Pokémon - PokéDex',
     description: 'Compare two Pokémon side by side',

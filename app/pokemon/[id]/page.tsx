@@ -56,7 +56,10 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
     let evolutionData = null;
     try {
       if (species.evolution_chain?.url) {
-        evolutionData = await getEvolutionChain(species.evolution_chain.url);
+        const evolutionChainId = parseInt(
+          species.evolution_chain.url.split('/').slice(-2, -1)[0]
+        );
+        evolutionData = await getEvolutionChain(evolutionChainId);
       }
     } catch {
       console.log('Evolution chain not available for this Pokemon');

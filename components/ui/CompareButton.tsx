@@ -14,15 +14,18 @@ export default function CompareButton({ pokemonId, size = 'md' }: CompareButtonP
   const [isFull, setIsFull] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    updateState();
-  }, [pokemonId]);
-
   const updateState = () => {
     setInComparison(isInComparison(pokemonId));
     setIsFull(isComparisonFull());
   };
+
+  useEffect(() => {
+    setMounted(true);
+    updateState();
+    window.addEventListener('storage', updateState);
+    return () => window.removeEventListener('storage', updateState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemonId]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -38,6 +38,7 @@ export default function PokemonList() {
     } else {
       loadPokemon(currentPage);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, hasActiveFilters]);
 
   useEffect(() => {
