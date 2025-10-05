@@ -1,7 +1,7 @@
 'use client';
 
 import { Pokemon } from '@/lib/types/pokemon';
-import { analyzeTypeCoverage, analyzeWeaknesses, calculateTeamStats, identifyRole, calculateSynergyScore } from '@/lib/utils/team-analysis';
+import { analyzeWeaknesses, calculateTeamStats, identifyRole, calculateSynergyScore } from '@/lib/utils/team-analysis';
 import { BarChart3, Shield, Zap } from 'lucide-react';
 import TypeBadge from '@/components/pokemon/TypeBadge';
 

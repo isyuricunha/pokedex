@@ -6,11 +6,10 @@ import { isWebShareSupported, shareViaWebShare, copyToClipboard, getPokemonShare
 
 interface ShareButtonProps {
   pokemonId: number;
-  pokemonName: string;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export default function ShareButton({ pokemonId, pokemonName, size = 'md' }: ShareButtonProps) {
+export default function ShareButton({ pokemonId, size = 'md' }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -31,7 +30,7 @@ export default function ShareButton({ pokemonId, pokemonName, size = 'md' }: Sha
     e.stopPropagation();
 
     if (isWebShareSupported()) {
-      const shareData = getPokemonShareData(pokemonId, pokemonName);
+      const shareData = getPokemonShareData(pokemonId);
       await shareViaWebShare(shareData);
     } else {
       setShowMenu(!showMenu);
@@ -42,7 +41,7 @@ export default function ShareButton({ pokemonId, pokemonName, size = 'md' }: Sha
     e.preventDefault();
     e.stopPropagation();
 
-    const shareData = getPokemonShareData(pokemonId, pokemonName);
+    const shareData = getPokemonShareData(pokemonId);
     const success = await copyToClipboard(shareData.url);
     
     if (success) {

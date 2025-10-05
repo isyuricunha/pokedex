@@ -132,7 +132,7 @@ export function filterByMultipleTypes(pokemonList: Pokemon[], types: string[]): 
   if (types.length === 0) return pokemonList;
   
   return pokemonList.filter(pokemon => {
-    const pokemonTypes = pokemon.types.map(t => t.type.name);
+    const pokemonTypes = pokemon.types.map(t => t.type.name as string);
     return types.every(type => pokemonTypes.includes(type));
   });
 }

@@ -135,7 +135,6 @@ export function getUnlockedAchievements(): Achievement[] {
  */
 export function getAllAchievements(): Achievement[] {
   const unlocked = getUnlockedAchievements();
-  const unlockedIds = new Set(unlocked.map(a => a.id));
   
   return ACHIEVEMENTS_LIST.map(achievement => {
     const unlockedAchievement = unlocked.find(a => a.id === achievement.id);

@@ -22,7 +22,6 @@ import FavoriteButton from '@/components/ui/FavoriteButton';
 import CompareButton from '@/components/ui/CompareButton';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import ShareButton from '@/components/ui/ShareButton';
-import { markPokemonAsViewed } from '@/lib/utils/collections';
 
 interface PokemonPageProps {
   params: Promise<{ id: string }>;
@@ -145,7 +144,7 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
                   <p className="text-text-secondary font-mono text-lg">
                     {formatPokemonId(pokemon.id)}
                   </p>
-                  <ShareButton pokemonId={pokemon.id} pokemonName={formatPokemonName(pokemon.name)} size="md" />
+                  <ShareButton pokemonId={pokemon.id} size="md" />
                   <FavoriteButton pokemonId={pokemon.id} size="md" />
                   <CompareButton pokemonId={pokemon.id} size="md" />
                 </div>

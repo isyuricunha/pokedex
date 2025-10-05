@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Trophy } from 'lucide-react';
 import { getPokemon, getPokemonArtwork, formatPokemonName } from '@/lib/api/pokeapi';
-import { getRandomPokemonId, generateWrongAnswers, shuffleArray, saveQuizScore, updateQuizStreak, getQuizStreak, getHighScores } from '@/lib/utils/quiz';
+import { getRandomPokemonId, generateWrongAnswers, shuffleArray, saveQuizScore, updateQuizStreak, getQuizStreak } from '@/lib/utils/quiz';
 import { Pokemon } from '@/lib/types/pokemon';
 
 type QuizMode = 'silhouette' | 'stats' | 'type' | 'menu';
@@ -64,9 +64,9 @@ export default function QuizPage() {
     const newStreak = updateQuizStreak(correct);
     setStreak(newStreak);
 
-    if (questionsAnswered + 1 >= 10) {
+    if (questionsAnswered + 1 >= 10 && mode !== 'menu') {
       saveQuizScore({
-        mode,
+        mode: mode as 'silhouette' | 'stats' | 'type',
         score: correct ? score + 1 : score,
         totalQuestions: 10,
         date: Date.now(),
@@ -95,15 +95,9 @@ export default function QuizPage() {
     if (mode !== 'menu' && !currentPokemon) {
       loadNewQuestion();
     }
-  }, [mode]);
+  }, [mode, currentPokemon]);
 
   if (mode === 'menu') {
-    const highScores = {
-      silhouette: getHighScores('silhouette', 5),
-      stats: getHighScores('stats', 5),
-      type: getHighScores('type', 5),
-    };
-
     return (
       <div className="min-h-screen bg-bg-primary">
         <header className="sticky top-0 z-50 bg-bg-primary/95 backdrop-blur-sm border-b border-border">
@@ -226,7 +220,7 @@ export default function QuizPage() {
           )}
 
           <h2 className="text-2xl font-bold text-text-primary mb-6 text-center">
-            Who's that Pokémon?
+            Who&apos;s that Pokémon?
           </h2>
 
           <div className="grid grid-cols-2 gap-4">

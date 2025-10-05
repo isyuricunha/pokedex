@@ -56,7 +56,7 @@ export function analyzeTypeCoverage(
     types.forEach(attackerType => {
       // Offensive coverage - which types can this Pokemon hit super-effectively
       allTypes.forEach(defenderType => {
-        const effectiveness = getTypeEffectiveness(attackerType, defenderType);
+        const effectiveness = getTypeEffectiveness(attackerType, [defenderType as TypeName]);
         if (effectiveness > 1) {
           offensive.set(defenderType, (offensive.get(defenderType) || 0) + 1);
         }
@@ -66,7 +66,7 @@ export function analyzeTypeCoverage(
     // Defensive coverage - which types does this Pokemon resist
     allTypes.forEach(attackerType => {
       const effectiveness = types.reduce((max, defenderType) => {
-        return Math.max(max, getTypeEffectiveness(attackerType, defenderType));
+        return Math.max(max, getTypeEffectiveness(attackerType, [defenderType as TypeName]));
       }, 0);
       
       if (effectiveness < 1) {
@@ -98,7 +98,7 @@ export function analyzeWeaknesses(
     allTypes.forEach(attackerType => {
       let totalEffectiveness = 1;
       types.forEach(defenderType => {
-        totalEffectiveness *= getTypeEffectiveness(attackerType, defenderType);
+        totalEffectiveness *= getTypeEffectiveness(attackerType, [defenderType as TypeName]);
       });
 
       if (totalEffectiveness > 1) {

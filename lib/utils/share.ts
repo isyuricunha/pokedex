@@ -71,7 +71,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 /**
  * Generate shareable Pokemon URL
  */
-export function getPokemonShareURL(pokemonId: number, pokemonName: string): string {
+export function getPokemonShareURL(pokemonId: number): string {
   if (typeof window !== 'undefined') {
     return `${window.location.origin}/pokemon/${pokemonId}`;
   }
@@ -81,21 +81,45 @@ export function getPokemonShareURL(pokemonId: number, pokemonName: string): stri
 /**
  * Generate share data for a Pokemon
  */
-export function getPokemonShareData(pokemonId: number, pokemonName: string): ShareData {
+export function getPokemonShareData(pokemonId: number): ShareData {
   return {
-    title: `${pokemonName} - PokéDex`,
-    text: `Check out ${pokemonName} on PokéDex!`,
-    url: getPokemonShareURL(pokemonId, pokemonName),
+    title: `Pokémon #${pokemonId} - PokéDex`,
+    text: `Check out Pokémon #${pokemonId} on PokéDex!`,
+    url: getPokemonShareURL(pokemonId),
   };
 }
 
 /**
  * Generate QR code data URL (using qrcode library)
  */
-export async function generateQRCode(text: string): Promise<string> {
+export async function generateQRCode(): Promise<string> {
   // This would use a QR code library like 'qrcode'
   // For now, returning placeholder
   // Implementation: import QRCode from 'qrcode'
-  // return await QRCode.toDataURL(text)
+  // return await QRCode.toDataURL(url)
   return '';
+}
+
+/**
+ * Share to Facebook
+ */
+export async function shareToFacebook(url: string): Promise<void> {
+  if (typeof navigator === 'undefined') return;
+
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(url);
+    }
+  } catch (error) {
+    console.error('Error sharing to Facebook:', error);
+  }
+}
+
+/**
+ * Share to Twitter
+ */
+export async function shareToTwitter(): Promise<void> {
+  // Placeholder for Twitter share functionality
+  // Implementation would open Twitter share dialog
+  return;
 }
