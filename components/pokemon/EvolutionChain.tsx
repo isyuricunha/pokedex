@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { ChainLink } from '@/lib/types/pokemon';
@@ -9,9 +10,9 @@ interface EvolutionChainProps {
 }
 
 export default function EvolutionChain({ chain }: EvolutionChainProps) {
-  const renderEvolution = (link: ChainLink, depth: number = 0): JSX.Element[] => {
+  const renderEvolution = (link: ChainLink, depth: number = 0): React.JSX.Element[] => {
     const pokemonId = extractPokemonId(link.species.url);
-    const elements: JSX.Element[] = [];
+    const elements: React.JSX.Element[] = [];
 
     elements.push(
       <div key={`${link.species.name}-${depth}`} className="flex flex-col items-center">
