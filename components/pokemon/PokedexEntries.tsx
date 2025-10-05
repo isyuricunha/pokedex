@@ -51,7 +51,7 @@ export default function PokedexEntries({ species }: PokedexEntriesProps) {
       <div className="bg-bg-primary border border-border rounded-xl p-6">
         {/* Entry Text */}
         <p className="text-text-primary text-lg leading-relaxed mb-4 min-h-[4rem]">
-          "{currentEntry.text}"
+          &quot;{currentEntry.text}&quot;
         </p>
 
         {/* Version Badge */}

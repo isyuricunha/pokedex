@@ -21,7 +21,7 @@ export default function DamageCalculator({ attacker }: DamageCalculatorProps) {
   const [isPhysical, setIsPhysical] = useState(true);
   const [defenderHP, setDefenderHP] = useState(100);
   const [defenderDefense, setDefenderDefense] = useState(80);
-  const [defenderTypes, setDefenderTypes] = useState<TypeName[]>(['normal']);
+  const defenderTypes: TypeName[] = ['normal'];
   const [isCritical, setIsCritical] = useState(false);
 
   const attackStat = isPhysical 

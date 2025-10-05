@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Pokemon } from '@/lib/types/pokemon';
+import { Pokemon, TypeName } from '@/lib/types/pokemon';
 import { getPokemonList, getPokemon, extractPokemonId } from '@/lib/api/pokeapi';
 import PokemonCard from './PokemonCard';
 import SearchBar from '@/components/ui/SearchBar';
@@ -56,7 +56,7 @@ export default function PokemonList() {
     // Apply type filter
     if (filters.types.length > 0) {
       filtered = filtered.filter((p) =>
-        p.types.some((t) => filters.types.includes(t.type.name))
+        p.types.some((t: { type: { name: TypeName }; slot: number }) => filters.types.includes(t.type.name))
       );
     }
 
@@ -225,7 +225,7 @@ export default function PokemonList() {
       ) : filteredPokemon.length > 0 ? (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredPokemon.map((p) => (
+            {filteredPokemon.map((p: Pokemon) => (
               <PokemonCard key={p.id} pokemon={p} />
             ))}
           </div>
@@ -240,9 +240,16 @@ export default function PokemonList() {
           )}
         </>
       ) : (
-        <div className="text-center py-16">
-          <p className="text-text-secondary text-lg">
-            No Pokémon found for "{searchQuery}"
+        <div className="text-center py-12">
+          <p className="text-text-secondary text-lg">No Pokémon found</p>
+        </div>
+      )}
+
+      {/* Info banner for global filters */}
+      {hasActiveFilters && filteredPokemon.length > 0 && (
+        <div className="mt-6 p-4 bg-accent/10 border border-accent/30 rounded-xl">
+          <p className="text-sm text-text-secondary">
+            Showing results from all {filteredPokemon.length} Pokémon. &quot;Advanced Filters&quot; are global!
           </p>
         </div>
       )}

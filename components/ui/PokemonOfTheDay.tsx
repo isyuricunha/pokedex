@@ -6,6 +6,7 @@ import { getPokemon, getPokemonArtwork, formatPokemonName } from '@/lib/api/poke
 import { Pokemon } from '@/lib/types/pokemon';
 import { Calendar, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import TypeBadge from '@/components/pokemon/TypeBadge';
 
 export default function PokemonOfTheDay() {
@@ -65,11 +66,12 @@ export default function PokemonOfTheDay() {
         >
           <div className="flex items-center gap-6">
             {/* Image */}
-            <div className="flex-shrink-0">
-              <img
+            <div className="flex-shrink-0 relative w-32 h-32">
+              <Image
                 src={getPokemonArtwork(pokemon.id)}
                 alt={pokemon.name}
-                className="w-32 h-32 object-contain"
+                fill
+                className="object-contain"
               />
             </div>
 

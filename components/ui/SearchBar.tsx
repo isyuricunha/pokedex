@@ -2,8 +2,7 @@
 
 import { Search, Clock, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { getSearchHistory, addToSearchHistory, removeFromSearchHistory } from '@/lib/utils/search-history';
+import { getSearchHistory, addToSearchHistory, removeFromSearchHistory, SearchHistoryItem } from '@/lib/utils/search-history';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -16,9 +15,8 @@ export default function SearchBar({
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [searchHistory, setSearchHistory] = useState<any[]>([]);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   // Load search history on mount
   useEffect(() => {
@@ -57,12 +55,6 @@ export default function SearchBar({
     e.stopPropagation();
     removeFromSearchHistory(historyQuery);
     setSearchHistory(getSearchHistory());
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
-    onSearch(value);
   };
 
   return (

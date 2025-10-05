@@ -21,7 +21,7 @@ export default function Home() {
                 className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 shadow-lg"
               >
                 <Sparkles className="w-4 h-4" />
-                I'm Feeling Lucky
+                I&apos;m Feeling Lucky
               </Link>
             </div>
             <ThemeToggle />

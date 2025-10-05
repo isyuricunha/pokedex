@@ -65,10 +65,6 @@ export default async function GenerationPage({ params }: GenerationPageProps) {
 
     const pokemonList = await Promise.all(pokemonPromises);
 
-    // Calculate stats
-    const legendaryCount = 0; // Would need species data to determine
-    const regionalVariants = 0; // Would need detailed analysis
-
     return (
       <div className="min-h-screen bg-bg-primary">
         <main className="container mx-auto px-4 py-8 max-w-7xl">

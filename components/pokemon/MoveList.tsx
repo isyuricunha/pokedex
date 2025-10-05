@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Swords } from 'lucide-react';
-import TypeBadge from './TypeBadge';
 
 interface Move {
   move: {

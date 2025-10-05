@@ -58,7 +58,7 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
       if (species.evolution_chain?.url) {
         evolutionData = await getEvolutionChain(species.evolution_chain.url);
       }
-    } catch (error) {
+    } catch {
       console.log('Evolution chain not available for this Pokemon');
       // evolutionData remains null, page will skip evolution section
     }

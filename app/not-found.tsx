@@ -10,8 +10,9 @@ export default function NotFound() {
           Pokémon Not Found
         </h2>
         <p className="text-text-secondary mb-8 max-w-md mx-auto">
-          Looks like this Pokémon fled! The Pokémon you're looking for doesn't exist
-          or was caught by another trainer.
+          <p className="text-text-secondary mb-8">
+            The Pokémon you&apos;re looking for doesn&apos;t exist in the Pokédex.
+          </p>or was caught by another trainer.
         </p>
         <Link
           href="/"
