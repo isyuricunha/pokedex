@@ -73,6 +73,7 @@ export default function Home() {
           </p>
         </div>
       </footer>
+      
       <AchievementToast />
     </div>
   );

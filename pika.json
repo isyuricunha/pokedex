@@ -1,0 +1,17 @@
+{
+  "id": "team-1759651473608-ocnqkq48a",
+  "name": "pika",
+  "members": [
+    {
+      "pokemonId": 1
+    },
+    {
+      "pokemonId": 2
+    },
+    {
+      "pokemonId": 3
+    }
+  ],
+  "createdAt": 1759651473608,
+  "updatedAt": 1759651480663
+}
