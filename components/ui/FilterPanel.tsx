@@ -15,6 +15,9 @@ export interface FilterState {
   minSpeed?: number;
   minAttack?: number;
   minHP?: number;
+  ability?: string;
+  eggGroup?: string;
+  evolutionStage?: 'baby' | 'basic' | 'stage1' | 'stage2' | 'legendary';
 }
 
 const ALL_TYPES: TypeName[] = [
@@ -43,6 +46,9 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
   const [minSpeed, setMinSpeed] = useState<number>(0);
   const [minAttack, setMinAttack] = useState<number>(0);
   const [minHP, setMinHP] = useState<number>(0);
+  const [selectedAbility, setSelectedAbility] = useState<string>('');
+  const [selectedEggGroup, setSelectedEggGroup] = useState<string>('');
+  const [selectedEvolutionStage, setSelectedEvolutionStage] = useState<'' | 'baby' | 'basic' | 'stage1' | 'stage2' | 'legendary'>('');
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const emitFilters = () => {
@@ -53,6 +59,9 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
       minSpeed: minSpeed > 0 ? minSpeed : undefined,
       minAttack: minAttack > 0 ? minAttack : undefined,
       minHP: minHP > 0 ? minHP : undefined,
+      ability: selectedAbility || undefined,
+      eggGroup: selectedEggGroup || undefined,
+      evolutionStage: selectedEvolutionStage || undefined,
     });
   };
 
@@ -82,10 +91,13 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
     setMinSpeed(0);
     setMinAttack(0);
     setMinHP(0);
+    setSelectedAbility('');
+    setSelectedEggGroup('');
+    setSelectedEvolutionStage('');
     onFilterChange({ types: [], generation: null, favoritesOnly: false });
   };
 
-  const activeFiltersCount = selectedTypes.length + (selectedGeneration ? 1 : 0) + (favoritesOnly ? 1 : 0) + (minSpeed > 0 ? 1 : 0) + (minAttack > 0 ? 1 : 0) + (minHP > 0 ? 1 : 0);
+  const activeFiltersCount = selectedTypes.length + (selectedGeneration ? 1 : 0) + (favoritesOnly ? 1 : 0) + (minSpeed > 0 ? 1 : 0) + (minAttack > 0 ? 1 : 0) + (minHP > 0 ? 1 : 0) + (selectedAbility ? 1 : 0) + (selectedEggGroup ? 1 : 0) + (selectedEvolutionStage ? 1 : 0);
 
   return (
     <div className="relative">
@@ -192,7 +204,9 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
 
             {/* Advanced Stat Filters */}
             {showAdvanced && (
-              <div className="mb-4 space-y-3 bg-bg-primary border border-border rounded-lg p-4">
+              <div className="mb-4 space-y-4 bg-bg-primary border border-border rounded-lg p-4">
+                {/* Stat Sliders */}
+                <div className="space-y-3 pb-3 border-b border-border">
                 <div>
                   <label className="text-xs text-text-secondary mb-1 block">
                     Min Speed: {minSpeed > 0 ? minSpeed : 'Any'}
@@ -233,6 +247,69 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
                     value={minHP}
                     onChange={(e) => { setMinHP(Number(e.target.value)); setTimeout(emitFilters, 0); }}
                     className="w-full"
+                  />
+                </div>
+                </div>
+
+                {/* Evolution Stage Filter */}
+                <div>
+                  <label className="text-xs text-text-secondary mb-2 block">
+                    Evolution Stage
+                  </label>
+                  <select
+                    value={selectedEvolutionStage}
+                    onChange={(e) => { setSelectedEvolutionStage(e.target.value as any); setTimeout(emitFilters, 0); }}
+                    className="w-full bg-bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent"
+                  >
+                    <option value="">All Stages</option>
+                    <option value="baby">Baby</option>
+                    <option value="basic">Basic</option>
+                    <option value="stage1">Stage 1</option>
+                    <option value="stage2">Stage 2</option>
+                    <option value="legendary">Legendary/Mythical</option>
+                  </select>
+                </div>
+
+                {/* Egg Group Filter */}
+                <div>
+                  <label className="text-xs text-text-secondary mb-2 block">
+                    Egg Group
+                  </label>
+                  <select
+                    value={selectedEggGroup}
+                    onChange={(e) => { setSelectedEggGroup(e.target.value); setTimeout(emitFilters, 0); }}
+                    className="w-full bg-bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent"
+                  >
+                    <option value="">All Egg Groups</option>
+                    <option value="monster">Monster</option>
+                    <option value="water1">Water 1</option>
+                    <option value="bug">Bug</option>
+                    <option value="flying">Flying</option>
+                    <option value="ground">Ground</option>
+                    <option value="fairy">Fairy</option>
+                    <option value="plant">Plant</option>
+                    <option value="human-like">Human-Like</option>
+                    <option value="water3">Water 3</option>
+                    <option value="mineral">Mineral</option>
+                    <option value="amorphous">Amorphous</option>
+                    <option value="water2">Water 2</option>
+                    <option value="ditto">Ditto</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="no-eggs">No Eggs Discovered</option>
+                  </select>
+                </div>
+
+                {/* Ability Search */}
+                <div>
+                  <label className="text-xs text-text-secondary mb-2 block">
+                    Ability (search)
+                  </label>
+                  <input
+                    type="text"
+                    value={selectedAbility}
+                    onChange={(e) => { setSelectedAbility(e.target.value); setTimeout(emitFilters, 200); }}
+                    placeholder="e.g., Levitate, Intimidate..."
+                    className="w-full bg-bg-secondary border border-border rounded-lg px-3 py-2 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-accent"
                   />
                 </div>
               </div>

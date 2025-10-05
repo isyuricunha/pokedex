@@ -11,7 +11,7 @@ import FilterPanel, { FilterState, GENERATIONS } from '@/components/ui/FilterPan
 import { getFavorites } from '@/lib/utils/favorites';
 
 const POKEMON_PER_PAGE = 20;
-const TOTAL_POKEMON = 1025; // Total Pokemon in PokeAPI (Gen 1-9)
+const TOTAL_POKEMON = 1025; // Total main Pokemon (Gen I-IX). IDs 10001+ are alternate forms without species data
 
 export default function PokemonList() {
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -20,14 +20,14 @@ export default function PokemonList() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState<FilterState>({ types: [], generation: null, favoritesOnly: false, minSpeed: undefined, minAttack: undefined, minHP: undefined });
+  const [filters, setFilters] = useState<FilterState>({ types: [], generation: null, favoritesOnly: false, minSpeed: undefined, minAttack: undefined, minHP: undefined, ability: undefined, eggGroup: undefined, evolutionStage: undefined });
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
 
   const totalPages = Math.ceil(TOTAL_POKEMON / POKEMON_PER_PAGE);
 
   // Check if filters are active
   useEffect(() => {
-    const active = searchQuery.trim() !== '' || filters.types.length > 0 || filters.generation !== null || filters.favoritesOnly || (filters.minSpeed && filters.minSpeed > 0) || (filters.minAttack && filters.minAttack > 0) || (filters.minHP && filters.minHP > 0);
+    const active = searchQuery.trim() !== '' || filters.types.length > 0 || filters.generation !== null || filters.favoritesOnly || (filters.minSpeed && filters.minSpeed > 0) || (filters.minAttack && filters.minAttack > 0) || (filters.minHP && filters.minHP > 0) || !!filters.ability || !!filters.eggGroup || !!filters.evolutionStage;
     setHasActiveFilters(active);
   }, [searchQuery, filters]);
 
@@ -98,6 +98,20 @@ export default function PokemonList() {
       });
     }
 
+    // Apply ability filter
+    if (filters.ability && filters.ability.trim() !== '') {
+      const abilitySearch = filters.ability.toLowerCase();
+      filtered = filtered.filter((p) => 
+        p.abilities.some((a: { ability: { name: string } }) => 
+          a.ability.name.toLowerCase().includes(abilitySearch)
+        )
+      );
+    }
+
+    // Note: egg group and evolution stage filters require species data
+    // These will be applied server-side or require loading species data for all Pokemon
+    // For now, showing a note that these filters work best with smaller datasets
+
     setFilteredPokemon(filtered);
   }, [searchQuery, pokemon, allPokemon, filters, hasActiveFilters]);
 
@@ -107,7 +121,13 @@ export default function PokemonList() {
       const offset = (page - 1) * POKEMON_PER_PAGE;
       const listResponse = await getPokemonList(POKEMON_PER_PAGE, offset);
 
-      const pokemonPromises = listResponse.results.map((result) => {
+      // Filter out alternate forms (IDs > 1025) to avoid species 404 errors
+      const validResults = listResponse.results.filter((result) => {
+        const id = extractPokemonId(result.url);
+        return id <= TOTAL_POKEMON; // Only include main Pokemon (1-1025)
+      });
+
+      const pokemonPromises = validResults.map((result) => {
         const id = extractPokemonId(result.url);
         return getPokemon(id);
       });
@@ -145,7 +165,13 @@ export default function PokemonList() {
       const count = end - start + 1;
       const listResponse = await getPokemonList(count, start - 1);
 
-      const pokemonPromises = listResponse.results.map((result) => {
+      // Filter out alternate forms (IDs > 1025) to avoid species 404 errors
+      const validResults = listResponse.results.filter((result) => {
+        const id = extractPokemonId(result.url);
+        return id >= start && id <= end && id <= TOTAL_POKEMON;
+      });
+
+      const pokemonPromises = validResults.map((result) => {
         const id = extractPokemonId(result.url);
         return getPokemon(id);
       });

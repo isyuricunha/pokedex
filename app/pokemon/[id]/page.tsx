@@ -16,6 +16,8 @@ import EvolutionChain from '@/components/pokemon/EvolutionChain';
 import TypeMatchup from '@/components/pokemon/TypeMatchup';
 import BreedingInfo from '@/components/pokemon/BreedingInfo';
 import DamageCalculator from '@/components/pokemon/DamageCalculator';
+import MoveList from '@/components/pokemon/MoveList';
+import PokedexEntries from '@/components/pokemon/PokedexEntries';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import CompareButton from '@/components/ui/CompareButton';
 import ThemeToggle from '@/components/ui/ThemeToggle';
@@ -222,6 +224,16 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
           {/* Damage Calculator */}
           <div className="mt-8">
             <DamageCalculator attacker={pokemon} />
+          </div>
+
+          {/* Pokédex Entries */}
+          <div className="mt-8">
+            <PokedexEntries species={species} />
+          </div>
+
+          {/* Moves */}
+          <div className="mt-8">
+            <MoveList moves={pokemon.moves} />
           </div>
         </main>
       </div>
