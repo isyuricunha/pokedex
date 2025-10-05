@@ -7,6 +7,7 @@ import PokemonOfTheDay from '@/components/ui/PokemonOfTheDay';
 import Link from 'next/link';
 import { Sparkles, Users } from 'lucide-react';
 import CompareBar from '@/components/ui/CompareBar';
+import ServiceWorkerRegistration from '@/components/ui/ServiceWorkerRegistration';
 
 export default function Home() {
   return (
@@ -75,6 +76,7 @@ export default function Home() {
       </footer>
       
       <AchievementToast />
+      <ServiceWorkerRegistration />
     </div>
   );
 }

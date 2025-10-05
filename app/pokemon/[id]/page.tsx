@@ -63,6 +63,7 @@ export async function generateMetadata({ params }: PokemonPageProps) {
 // Import the client component
 import ShinyPokemonWrapper from '@/components/pokemon/ShinyPokemonWrapper';
 import PokemonViewTracker from '@/components/pokemon/PokemonViewTracker';
+import SwipeNavigation from '@/components/pokemon/SwipeNavigation';
 
 export default async function PokemonPage({ params }: PokemonPageProps) {
   const { id } = await params;
@@ -272,6 +273,9 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
         
         {/* Track view (client-side) */}
         <PokemonViewTracker pokemonId={pokemon.id} />
+        
+        {/* Swipe navigation */}
+        <SwipeNavigation currentId={pokemon.id} />
       </ShinyPokemonWrapper>
     );
   } catch (error) {
