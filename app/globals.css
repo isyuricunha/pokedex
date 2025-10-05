@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="dark"] {
+  /* Color Palette - Pure Black Theme with Dark Orange Accent */
+  --background-primary: #000000;
+  --background-secondary: #0A0A0A;
+  --accent: #FF8C00;
+  --accent-hover: #FFA500;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --border: #1A1A1A;
+}
+
+[data-theme="light"] {
+  /* Color Palette - Light Theme */
+  --background-primary: #FFFFFF;
+  --background-secondary: #F5F5F5;
+  --accent: #FF8C00;
+  --accent-hover: #FFA500;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B7280;
+  --border: #E5E7EB;
+}
+
+@theme inline {
+  /* Custom Colors */
+  --color-bg-primary: var(--background-primary);
+  --color-bg-secondary: var(--background-secondary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border);
+  
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
