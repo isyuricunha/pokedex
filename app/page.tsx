@@ -2,7 +2,7 @@ import PokemonList from '@/components/pokemon/PokemonList';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import PokemonOfTheDay from '@/components/ui/PokemonOfTheDay';
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Users } from 'lucide-react';
 import CompareBar from '@/components/ui/CompareBar';
 
 export default function Home() {
@@ -22,6 +22,13 @@ export default function Home() {
               >
                 <Sparkles className="w-4 h-4" />
                 I&apos;m Feeling Lucky
+              </Link>
+              <Link
+                href="/team"
+                className="flex items-center gap-2 bg-bg-secondary border border-border hover:border-accent text-text-primary px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105"
+              >
+                <Users className="w-4 h-4" />
+                My Teams
               </Link>
             </div>
             <ThemeToggle />

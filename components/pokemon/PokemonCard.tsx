@@ -5,6 +5,7 @@ import { formatPokemonId, getPokemonArtwork } from '@/lib/api/pokeapi';
 import TypeBadge from './TypeBadge';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import CompareButton from '@/components/ui/CompareButton';
+import TeamButton from '@/components/ui/TeamButton';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -22,7 +23,8 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="absolute top-4 left-4 z-10 flex gap-2">
+        <div className="absolute top-2 right-2 flex gap-2">
+          <TeamButton pokemonId={pokemon.id} size="sm" />
           <FavoriteButton pokemonId={pokemon.id} size="sm" />
           <CompareButton pokemonId={pokemon.id} size="sm" />
         </div>
