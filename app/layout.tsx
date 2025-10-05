@@ -13,14 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PokéDex - Explore the World of Pokémon",
-  description: "A modern and minimalist web application for querying Pokémon information using PokéAPI.",
+  title: "PokéDex - Explore All Pokémon",
+  description: "A modern PokéDex built with Next.js and PokéAPI. Explore 1025+ Pokémon with detailed stats, evolutions, and team building.",
   keywords: ["pokemon", "pokedex", "pokeapi", "pokemon database"],
   authors: [{ name: "PokéDex Team" }],
   openGraph: {
-    title: "PokéDex - Explore the World of Pokémon",
-    description: "A modern and minimalist web application for querying Pokémon information.",
+    title: "PokéDex - Explore All Pokémon",
+    description: "A modern PokéDex built with Next.js and PokéAPI. Explore 1025+ Pokémon with detailed stats, evolutions, and team building.",
     type: "website",
+    locale: "en_US",
+    siteName: "PokéDex",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PokéDex - Explore All Pokémon",
+    description: "A modern PokéDex built with Next.js and PokéAPI. Explore 1025+ Pokémon with detailed stats, evolutions, and team building.",
   },
 };
 

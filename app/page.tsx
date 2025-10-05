@@ -1,5 +1,8 @@
 import PokemonList from '@/components/pokemon/PokemonList';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import PreferencesPanel from '@/components/ui/PreferencesPanel';
+import CollectionTracker from '@/components/ui/CollectionTracker';
+import AchievementToast from '@/components/ui/AchievementToast';
 import PokemonOfTheDay from '@/components/ui/PokemonOfTheDay';
 import Link from 'next/link';
 import { Sparkles, Users } from 'lucide-react';
@@ -31,7 +34,11 @@ export default function Home() {
                 My Teams
               </Link>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <CollectionTracker />
+              <PreferencesPanel />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>
@@ -66,6 +73,7 @@ export default function Home() {
           </p>
         </div>
       </footer>
+      <AchievementToast />
     </div>
   );
 }

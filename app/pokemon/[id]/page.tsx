@@ -21,6 +21,8 @@ import PokedexEntries from '@/components/pokemon/PokedexEntries';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import CompareButton from '@/components/ui/CompareButton';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import ShareButton from '@/components/ui/ShareButton';
+import { markPokemonAsViewed } from '@/lib/utils/collections';
 
 interface PokemonPageProps {
   params: Promise<{ id: string }>;
@@ -31,9 +33,25 @@ export async function generateMetadata({ params }: PokemonPageProps) {
   
   try {
     const pokemon = await getPokemon(id);
+    const name = formatPokemonName(pokemon.name);
+    const artwork = getPokemonArtwork(pokemon.id);
+    const description = `Discover ${name} #${formatPokemonId(pokemon.id)} - Types, stats, abilities, evolution chain and more!`;
+    
     return {
-      title: `${formatPokemonName(pokemon.name)} - PokéDex`,
-      description: `Informações detalhadas sobre ${formatPokemonName(pokemon.name)}`,
+      title: `${name} - PokéDex`,
+      description,
+      openGraph: {
+        title: `${name} #${formatPokemonId(pokemon.id)}`,
+        description,
+        images: [{ url: artwork, width: 475, height: 475, alt: name }],
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${name} #${formatPokemonId(pokemon.id)}`,
+        description,
+        images: [artwork],
+      },
     };
   } catch {
     return {
@@ -44,6 +62,7 @@ export async function generateMetadata({ params }: PokemonPageProps) {
 
 // Import the client component
 import ShinyPokemonWrapper from '@/components/pokemon/ShinyPokemonWrapper';
+import PokemonViewTracker from '@/components/pokemon/PokemonViewTracker';
 
 export default async function PokemonPage({ params }: PokemonPageProps) {
   const { id } = await params;
@@ -125,6 +144,7 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
                   <p className="text-text-secondary font-mono text-lg">
                     {formatPokemonId(pokemon.id)}
                   </p>
+                  <ShareButton pokemonId={pokemon.id} pokemonName={formatPokemonName(pokemon.name)} size="md" />
                   <FavoriteButton pokemonId={pokemon.id} size="md" />
                   <CompareButton pokemonId={pokemon.id} size="md" />
                 </div>
@@ -249,6 +269,9 @@ export default async function PokemonPage({ params }: PokemonPageProps) {
           </div>
         </main>
         </div>
+        
+        {/* Track view (client-side) */}
+        <PokemonViewTracker pokemonId={pokemon.id} />
       </ShinyPokemonWrapper>
     );
   } catch (error) {
