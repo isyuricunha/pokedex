@@ -124,6 +124,15 @@ export interface PokemonSpecies {
   is_baby: boolean;
   is_legendary: boolean;
   is_mythical: boolean;
+  hatch_counter: number;
+  growth_rate: {
+    name: string;
+    url: string;
+  };
+  egg_groups: {
+    name: string;
+    url: string;
+  }[];
   evolution_chain: {
     url: string;
   };
