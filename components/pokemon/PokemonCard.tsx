@@ -16,17 +16,17 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
 
   return (
     <Link href={`/pokemon/${pokemon.id}`}>
-      <div className="group relative bg-bg-secondary border border-border rounded-2xl p-6 transition-all duration-300 hover:border-accent hover:shadow-lg hover:shadow-accent/20 hover:-translate-y-1 cursor-pointer">
-        {/* Pokemon Number */}
-        <div className="absolute top-4 right-4 text-text-secondary font-mono text-sm">
-          {formatPokemonId(pokemon.id)}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="absolute top-2 right-2 flex gap-2">
+      <div className="group relative bg-bg-secondary border border-border rounded-3xl p-6 transition-all hover:border-accent hover:shadow-lg hover:shadow-accent/20">
+        {/* Action Buttons - Top Left */}
+        <div className="absolute top-2 left-2 flex gap-2 z-10">
           <TeamButton pokemonId={pokemon.id} size="sm" />
           <FavoriteButton pokemonId={pokemon.id} size="sm" />
           <CompareButton pokemonId={pokemon.id} size="sm" />
+        </div>
+
+        {/* Pokemon Number - Top Right */}
+        <div className="absolute top-2 right-2 text-text-secondary font-mono text-sm">
+          {formatPokemonId(pokemon.id)}
         </div>
 
         {/* Pokemon Image */}

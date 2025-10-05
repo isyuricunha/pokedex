@@ -77,8 +77,8 @@ export default function CollectionTracker() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-bg-primary border border-border rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto">
+          <div className="bg-bg-primary border border-border rounded-2xl max-w-2xl w-full my-8">
             <div className="sticky top-0 bg-bg-primary border-b border-border p-6 flex items-center justify-between">
               <h2 className="text-2xl font-bold text-text-primary">Collection Progress</h2>
               <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-bg-secondary rounded-full">
